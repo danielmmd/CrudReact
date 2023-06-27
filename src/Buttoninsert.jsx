@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
 
-function Buttoninsert() {
+function Buttoninsert({ onInsert }) {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [nombre, setNombre] = useState('');
@@ -25,8 +25,10 @@ function Buttoninsert() {
         apellido: apellido
 
       };
+
+
   
-    fetch('https://seminariodeactualizacion.onrender.com/api/persona/', {
+   fetch('https://seminariodeactualizacion.onrender.com/api/persona/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,6 +39,7 @@ function Buttoninsert() {
     .then(responseData => {
       // Maneja la respuesta del servidor aquí
       console.log(responseData);
+      onInsert(responseData);
     })
     .catch(error => {
       // Maneja los errores aquí
@@ -47,8 +50,11 @@ function Buttoninsert() {
       alert('Elemento agregado correctamente');
       
       setShowModal(false);
-  };
+    
+
   
+  };
+
 
 
   const handleCloseModal = () => {
@@ -59,7 +65,7 @@ function Buttoninsert() {
   return (
     <>
       {/* Botón para abrir el modal */}
-      <Button variant="primary" onClick={() => setShowModal(true)}>
+      <Button variant="primary" onClick={() => setShowModal(true)} className="px-4 my-20">
         Agregar
       </Button>
 
